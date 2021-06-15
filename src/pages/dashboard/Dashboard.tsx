@@ -1,4 +1,3 @@
-import { Breadcrumb } from "antd";
 import React, { useState } from "react";
 import CustomBereadcrumb from "../../components/CustomBereadcrumb";
 import MainComponent from "../../components/MainComponent";
@@ -11,7 +10,12 @@ const Dashboard = () => {
         className="site-layout-background"
         style={{ padding: 24, minHeight: 360 }}
       >
-        Bill is a cat.
+        <div className="dashboard-wrapper">
+          <h1 className="web-title">Welcome to Library Management System</h1>
+          <h2 className="broadway">Broadway Infosys Nepal</h2>
+          <h2 className="course">Mern Stack Course</h2>
+          <p className="instructor">Instructor: Aashish Dahal</p>
+        </div>
       </div>
     </MainComponent>
   );

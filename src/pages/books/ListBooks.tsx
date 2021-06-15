@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import CustomBereadcrumb from "../../components/CustomBereadcrumb";
+import MainComponent from "../../components/MainComponent";
 
 interface IBook {
   _id?: string;
@@ -47,7 +49,8 @@ const ListBooks = () => {
   }, []);
 
   return (
-    <div>
+    <MainComponent>
+      <CustomBereadcrumb items={["Books"]} />
       <h3>Welcome to Book List</h3>
       <ul>
         {books.map((book, index) => (
@@ -83,7 +86,7 @@ const ListBooks = () => {
           {newBook._id ? "Edit" : "Add"}
         </button>
       </div>
-    </div>
+    </MainComponent>
   );
 };
 
