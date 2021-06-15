@@ -1,3 +1,4 @@
+import { Table } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import CustomBereadcrumb from "../../components/CustomBereadcrumb";
@@ -44,6 +45,47 @@ const ListBooks = () => {
     setNewBook(response.data.data);
   };
 
+  const dataSource = [
+    {
+      key: "1",
+      name: "Mike",
+      age: 32,
+      address: "10 Downing Street",
+    },
+    {
+      key: "2",
+      name: "John",
+      age: 42,
+      address: "10 Downing Street",
+    },
+  ];
+
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Age",
+      dataIndex: "age",
+      key: "age",
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
+      key: "address",
+    },
+  ];
+  const bookColumns = [
+    { title: "Book Title", dataIndex: "title", key: "title" },
+    {
+      title: "Book Author",
+      dataIndex: "author",
+      key: "author",
+    },
+  ];
+
   useEffect(() => {
     getAllBooks();
   }, []);
@@ -52,7 +94,7 @@ const ListBooks = () => {
     <MainComponent>
       <CustomBereadcrumb items={["Books"]} />
       <h3>Welcome to Book List</h3>
-      <ul>
+      {/* <ul>
         {books.map((book, index) => (
           <li
             onClick={() => {
@@ -64,7 +106,8 @@ const ListBooks = () => {
             {book.title} - {book.author}{" "}
           </li>
         ))}
-      </ul>
+      </ul> */}
+      <Table dataSource={books} columns={bookColumns} />;
       <br />
       <div>
         <h3>Add Book</h3>

@@ -6,7 +6,7 @@ import { useHistory } from "react-router";
 const { Header, Content, Footer, Sider } = Layout;
 const MainComponent = (props: any) => {
   const history = useHistory();
-  const [collapsed, setCollapsed] = useState(true as boolean);
+  const [collapsed, setCollapsed] = useState(false as boolean);
 
   const onCollapse = () => {
     setCollapsed(!collapsed);

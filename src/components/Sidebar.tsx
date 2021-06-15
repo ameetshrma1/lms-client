@@ -19,7 +19,7 @@ const Sidebar = () => {
     setCollapsed(!collapsed);
   };
   return (
-    <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
+    <Menu theme="dark" defaultSelectedKeys={[""]} mode="inline">
       <Menu.Item
         onClick={() => {
           history.push("/books");
