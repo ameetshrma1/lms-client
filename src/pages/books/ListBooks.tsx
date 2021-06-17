@@ -1,4 +1,4 @@
-import { Table } from "antd";
+import { Table, Button, Modal } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import CustomBereadcrumb from "../../components/CustomBereadcrumb";
@@ -13,6 +13,7 @@ interface IBook {
 const ListBooks = () => {
   const [books, setBooks] = useState([] as IBook[]);
   const [newBook, setNewBook] = useState({} as IBook);
+  const [showModal, setShowModal] = useState(false as boolean);
 
   const getAllBooks = async () => {
     const response = await axios.get("http://localhost:4099/api/books");
@@ -34,55 +35,66 @@ const ListBooks = () => {
           newBook
         )
       : await axios.post("http://localhost:4099/api/books", newBook);
+
+    setShowModal(false);
     getAllBooks();
   };
 
   const handleBookEdit = async (id: string) => {
+    console.log("Handle Book Edit");
     if (id.length < 1) {
       return;
     }
     const response = await axios.get(`http://localhost:4099/api/books/${id}`);
     setNewBook(response.data.data);
+    setShowModal(true);
+  };
+  const handleCancel = () => {
+    setNewBook({
+      title: "",
+      author: "",
+    });
+    setShowModal(false);
+  };
+  const handleBookDelete = async (id: string) => {
+    const response = await axios.delete(
+      `http://localhost:4099/api/books/${id}`
+    );
+    getAllBooks();
   };
 
-  const dataSource = [
-    {
-      key: "1",
-      name: "Mike",
-      age: 32,
-      address: "10 Downing Street",
-    },
-    {
-      key: "2",
-      name: "John",
-      age: 42,
-      address: "10 Downing Street",
-    },
-  ];
-
-  const columns = [
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
-    },
-    {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
-    },
-  ];
   const bookColumns = [
     { title: "Book Title", dataIndex: "title", key: "title" },
     {
       title: "Book Author",
       dataIndex: "author",
       key: "author",
+    },
+    {
+      title: "Operations",
+      dataIndex: "_id",
+      key: "_id",
+      render: (_id: string) => (
+        <>
+          <Button
+            onClick={() => {
+              handleBookEdit(_id);
+            }}
+            type="primary"
+          >
+            Edit
+          </Button>
+          <Button
+            onClick={() => {
+              handleBookDelete(_id);
+            }}
+            danger
+            type="primary"
+          >
+            Delete
+          </Button>
+        </>
+      ),
     },
   ];
 
@@ -94,41 +106,39 @@ const ListBooks = () => {
     <MainComponent>
       <CustomBereadcrumb items={["Books"]} />
       <h3>Welcome to Book List</h3>
-      {/* <ul>
-        {books.map((book, index) => (
-          <li
-            onClick={() => {
-              handleBookEdit(book._id ? book._id : "");
-            }}
-            key={index}
-          >
-            {" "}
-            {book.title} - {book.author}{" "}
-          </li>
-        ))}
-      </ul> */}
-      <Table dataSource={books} columns={bookColumns} />;
+      <Button
+        onClick={() => {
+          setShowModal(true);
+        }}
+        type="primary"
+      >
+        Add Book
+      </Button>
+      <Table dataSource={books} columns={bookColumns} />
       <br />
-      <div>
-        <h3>Add Book</h3>
-        <input
-          onChange={handleInputChange}
-          value={newBook.title}
-          type="text"
-          name="title"
-          placeholder="Enter Book Name"
-        />
-        <input
-          onChange={handleInputChange}
-          value={newBook.author}
-          type="text"
-          name="author"
-          placeholder="Enter Author Name"
-        />
-        <button onClick={handleFormSubmit}>
-          {newBook._id ? "Edit" : "Add"}
-        </button>
-      </div>
+      <Modal
+        title={newBook._id ? "Edit Book" : "Add Book"}
+        visible={showModal}
+        onOk={handleFormSubmit}
+        onCancel={handleCancel}
+      >
+        <div>
+          <input
+            onChange={handleInputChange}
+            value={newBook.title}
+            type="text"
+            name="title"
+            placeholder="Enter Book Name"
+          />
+          <input
+            onChange={handleInputChange}
+            value={newBook.author}
+            type="text"
+            name="author"
+            placeholder="Enter Author Name"
+          />
+        </div>
+      </Modal>
     </MainComponent>
   );
 };
