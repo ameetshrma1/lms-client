@@ -1,8 +1,10 @@
-import { Table, Button, Modal } from "antd";
+import { Table, Button, Modal, Input } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import CustomBereadcrumb from "../../components/CustomBereadcrumb";
 import MainComponent from "../../components/MainComponent";
+import TitleComponent from "../../components/TitleComponent";
+import ButtonComponent from "../../components/ButtonComponent";
 
 interface IBook {
   _id?: string;
@@ -75,28 +77,32 @@ const ListBooks = () => {
       dataIndex: "_id",
       key: "_id",
       render: (_id: string) => (
-        <>
-          <Button
+        <div className="operation-wrapper">
+          <ButtonComponent
             onClick={() => {
               handleBookEdit(_id);
             }}
             type="primary"
-          >
-            Edit
-          </Button>
-          <Button
+            btnText="Edit"
+          />
+
+          <ButtonComponent
             onClick={() => {
               handleBookDelete(_id);
             }}
             danger
             type="primary"
-          >
-            Delete
-          </Button>
-        </>
+            btnText="Delete"
+          />
+        </div>
       ),
     },
   ];
+
+  const handleClickAddButton = (event: any) => {
+    event.persist();
+    setShowModal(true);
+  };
 
   useEffect(() => {
     getAllBooks();
@@ -105,15 +111,11 @@ const ListBooks = () => {
   return (
     <MainComponent>
       <CustomBereadcrumb items={["Books"]} />
-      <h3>Welcome to Book List</h3>
-      <Button
-        onClick={() => {
-          setShowModal(true);
-        }}
-        type="primary"
-      >
-        Add Book
-      </Button>
+      <TitleComponent
+        title="Book List"
+        addButton="Add Book"
+        addBtnClickFunction={handleClickAddButton}
+      />
       <Table dataSource={books} columns={bookColumns} />
       <br />
       <Modal
@@ -122,15 +124,15 @@ const ListBooks = () => {
         onOk={handleFormSubmit}
         onCancel={handleCancel}
       >
-        <div>
-          <input
+        <div className="modal-form">
+          <Input
             onChange={handleInputChange}
             value={newBook.title}
             type="text"
             name="title"
             placeholder="Enter Book Name"
           />
-          <input
+          <Input
             onChange={handleInputChange}
             value={newBook.author}
             type="text"

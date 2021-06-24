@@ -38,3 +38,20 @@
   font-style: italic;
   color: #26561a;
 }
+.title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0px;
+  align-items: center;
+}
+.ant-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.operation-wrapper {
+  display: flex;
+}
+.btn-component-wrapper {
+  margin: 0 10px;
+}

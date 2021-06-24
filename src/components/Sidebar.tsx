@@ -29,8 +29,14 @@ const Sidebar = () => {
       >
         Books
       </Menu.Item>
-      <Menu.Item key="2" icon={<DesktopOutlined />}>
-        Option 2
+      <Menu.Item
+        onClick={() => {
+          history.push("/members");
+        }}
+        key="2"
+        icon={<TeamOutlined />}
+      >
+        Members
       </Menu.Item>
       <SubMenu key="sub1" icon={<UserOutlined />} title="User">
         <Menu.Item key="3">Tom</Menu.Item>
