@@ -21,7 +21,7 @@ const MainComponent = (props: any) => {
         <Header className="site-layout-background" style={{ padding: 0 }} />
         <Content style={{ margin: "0 16px" }}>{props.children}</Content>
         <Footer style={{ textAlign: "center" }}>
-          Ant Design ©2018 Created by Ant UED
+          MUNDRE LIBARY ©2021 @ all right reserved
         </Footer>
       </Layout>
     </Layout>
