@@ -1,25 +1,40 @@
-import { Table, Button, Modal, Input } from "antd";
+import { Table, Button, Modal, Input, Select } from "antd";
+
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import CustomBereadcrumb from "../../components/CustomBereadcrumb";
 import MainComponent from "../../components/MainComponent";
 import TitleComponent from "../../components/TitleComponent";
 import ButtonComponent from "../../components/ButtonComponent";
+const { Option } = Select;
 
+interface ICategory {
+  _id: string;
+  genre: string;
+}
 interface IBook {
   _id?: string;
   author: string;
   title: string;
+  category?: ICategory;
 }
 
 const ListBooks = () => {
   const [books, setBooks] = useState([] as IBook[]);
   const [newBook, setNewBook] = useState({} as IBook);
   const [showModal, setShowModal] = useState(false as boolean);
+  const [categories, setCategories] = useState([] as ICategory[]);
+  const [newCat, setNewCat] = useState("" as string);
 
   const getAllBooks = async () => {
     const response = await axios.get("http://localhost:4099/api/books");
     setBooks(response.data.data);
+  };
+
+  const getAllCategories = async () => {
+    const response = await axios.get("http://localhost:4099/api/genre");
+    console.log("==========", response.data.data);
+    setCategories(response.data.data);
   };
 
   const handleInputChange = (event: any) => {
@@ -31,12 +46,13 @@ const ListBooks = () => {
   };
 
   const handleFormSubmit = async () => {
+    let tempBook = { ...newBook, category: newCat };
     const response = newBook._id
       ? await axios.patch(
           `http://localhost:4099/api/books/${newBook._id}`,
-          newBook
+          tempBook
         )
-      : await axios.post("http://localhost:4099/api/books", newBook);
+      : await axios.post("http://localhost:4099/api/books", tempBook);
 
     setShowModal(false);
     getAllBooks();
@@ -49,12 +65,14 @@ const ListBooks = () => {
     }
     const response = await axios.get(`http://localhost:4099/api/books/${id}`);
     setNewBook(response.data.data);
+    setNewCat(response.data.data.category);
     setShowModal(true);
   };
   const handleCancel = () => {
     setNewBook({
       title: "",
       author: "",
+      category: { _id: "", genre: "" },
     });
     setShowModal(false);
   };
@@ -65,12 +83,22 @@ const ListBooks = () => {
     getAllBooks();
   };
 
+  const handleCategoryChange = (value: string) => {
+    setNewCat(value);
+  };
+
   const bookColumns = [
     { title: "Book Title", dataIndex: "title", key: "title" },
     {
       title: "Book Author",
       dataIndex: "author",
       key: "author",
+    },
+    {
+      title: "Genre",
+      dataIndex: "category",
+      key: "category",
+      render: (category: ICategory) => category.genre,
     },
     {
       title: "Operations",
@@ -106,6 +134,7 @@ const ListBooks = () => {
 
   useEffect(() => {
     getAllBooks();
+    getAllCategories();
   }, []);
 
   return (
@@ -124,6 +153,7 @@ const ListBooks = () => {
         onOk={handleFormSubmit}
         onCancel={handleCancel}
       >
+        {console.log(newBook)}
         <div className="modal-form">
           <Input
             onChange={handleInputChange}
@@ -139,6 +169,17 @@ const ListBooks = () => {
             name="author"
             placeholder="Enter Author Name"
           />
+          <Select
+            defaultValue={newCat}
+            style={{ width: 120 }}
+            onChange={handleCategoryChange}
+          >
+            {categories.map((category, index) => (
+              <Option key={index} value={category._id}>
+                {category.genre}
+              </Option>
+            ))}
+          </Select>
         </div>
       </Modal>
     </MainComponent>

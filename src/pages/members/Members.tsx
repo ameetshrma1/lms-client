@@ -5,6 +5,7 @@ import TitleComponent from "../../components/TitleComponent";
 import { Table, Button, Modal, Input, Select } from "antd";
 import axios from "axios";
 import ButtonComponent from "../../components/ButtonComponent";
+import Cookies from "js-cookie";
 const { Option } = Select;
 
 interface IMembers {
@@ -16,6 +17,11 @@ const Members = () => {
   const [members, setMembers] = useState([] as IMembers[]);
   const [newMember, setnewMember] = useState({} as IMembers);
   const [showModal, setShowModal] = useState(false as boolean);
+
+  axios.defaults.headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${Cookies.get("access_token")}`,
+  };
 
   const getAllMembers = async () => {
     const response = await axios.get("http://localhost:4099/api/member");
