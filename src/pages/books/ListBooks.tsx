@@ -135,6 +135,7 @@ const ListBooks = () => {
 
   const handleClickAddButton = (event: any) => {
     event.persist();
+    setNewBook({} as IBook);
     setShowModal(true);
   };
 

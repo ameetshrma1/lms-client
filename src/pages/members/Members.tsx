@@ -104,6 +104,11 @@ const Members = () => {
 
   const handleClickAddButton = (event: any) => {
     event.persist();
+    setnewMember({
+      _id: "",
+      fullName: "",
+      membership: "",
+    });
     setShowModal(true);
   };
 
