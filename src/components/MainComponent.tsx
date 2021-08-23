@@ -124,14 +124,13 @@ const MainComponent = (props: any) => {
                 </Button>
               )}
             </Menu.Item>
-
-            <Menu.Item key="2">
-              {cookie && (
+            {cookie && (
+              <Menu.Item key="2">
                 <Popover content={user.email} title={user.fullName}>
                   <Button type="primary">Admin</Button>
                 </Popover>
-              )}
-            </Menu.Item>
+              </Menu.Item>
+            )}
           </Menu>
         </Header>
         <Content style={{ margin: "0 16px" }}>{props.children}</Content>
