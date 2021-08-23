@@ -1,15 +1,17 @@
 import { Menu } from "antd";
 import Sider from "antd/lib/layout/Sider";
 import SubMenu from "antd/lib/menu/SubMenu";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
-  DesktopOutlined,
-  FileOutlined,
   TeamOutlined,
-  UserOutlined,
   BookOutlined,
+  HomeOutlined,
+  HistoryOutlined,
 } from "@ant-design/icons";
 import { useHistory } from "react-router";
+import axios from "axios";
+import { Typography } from "antd";
+const { Title } = Typography;
 
 const Sidebar = () => {
   const history = useHistory();
@@ -18,13 +20,23 @@ const Sidebar = () => {
   const onCollapse = () => {
     setCollapsed(!collapsed);
   };
+
   return (
     <Menu theme="dark" defaultSelectedKeys={[""]} mode="inline">
       <Menu.Item
         onClick={() => {
-          history.push("/books");
+          history.push("/");
         }}
         key="1"
+        icon={<HomeOutlined />}
+      >
+        Home
+      </Menu.Item>
+      <Menu.Item
+        onClick={() => {
+          history.push("/books");
+        }}
+        key="2"
         icon={<BookOutlined />}
       >
         Books
@@ -33,22 +45,20 @@ const Sidebar = () => {
         onClick={() => {
           history.push("/members");
         }}
-        key="2"
+        key="3"
         icon={<TeamOutlined />}
       >
         Members
       </Menu.Item>
-      <SubMenu key="sub1" icon={<UserOutlined />} title="User">
-        <Menu.Item key="3">Tom</Menu.Item>
-        <Menu.Item key="4">Bill</Menu.Item>
-        <Menu.Item key="5">Alex</Menu.Item>
-      </SubMenu>
-      <SubMenu key="sub2" icon={<TeamOutlined />} title="Team">
-        <Menu.Item key="6">Team 1</Menu.Item>
-        <Menu.Item key="8">Team 2</Menu.Item>
-      </SubMenu>
-      <Menu.Item key="9" icon={<FileOutlined />}>
-        Files
+
+      <Menu.Item
+        onClick={() => {
+          history.push("/histories");
+        }}
+        key="4"
+        icon={<HistoryOutlined />}
+      >
+        Histories
       </Menu.Item>
     </Menu>
   );

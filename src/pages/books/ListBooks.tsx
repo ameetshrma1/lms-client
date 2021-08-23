@@ -16,6 +16,7 @@ interface IBook {
   _id?: string;
   author: string;
   title: string;
+  status: boolean;
   category?: ICategory;
 }
 
@@ -73,6 +74,7 @@ const ListBooks = () => {
       title: "",
       author: "",
       category: { _id: "", genre: "" },
+      status: true,
     });
     setShowModal(false);
   };

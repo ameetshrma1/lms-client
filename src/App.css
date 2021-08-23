@@ -55,3 +55,7 @@
 .btn-component-wrapper {
   margin: 0 10px;
 }
+.header-navbar {
+  display: flex;
+  flex-direction: row-reverse;
+}

@@ -6,6 +6,7 @@ import ListBooks from "./pages/books/ListBooks";
 import Dashboard from "./pages/dashboard/Dashboard";
 import Members from "./pages/members/Members";
 import Login from "./pages/Auth/Login";
+import HistoryList from "./pages/histories/HistoryList";
 
 function App() {
   return (
@@ -13,8 +14,7 @@ function App() {
       <Switch>
         <Route path="/books" component={ListBooks} />
         <Route path="/members" component={Members} />
-        <Route path="/login" component={Login} />
-
+        <Route path="/histories" component={HistoryList} />
         <Route path="/" component={Dashboard} />
       </Switch>
     </BrowserRouter>

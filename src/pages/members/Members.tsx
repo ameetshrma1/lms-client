@@ -18,6 +18,8 @@ const Members = () => {
   const [newMember, setnewMember] = useState({} as IMembers);
   const [showModal, setShowModal] = useState(false as boolean);
 
+  let isEditModal = false;
+
   axios.defaults.headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${Cookies.get("access_token")}`,
@@ -74,6 +76,7 @@ const Members = () => {
             }}
             type="primary"
             btnText="Edit"
+            name="edit"
           />
 
           <ButtonComponent
@@ -83,6 +86,7 @@ const Members = () => {
             danger
             type="primary"
             btnText="Delete"
+            name="delete"
           />
         </div>
       ),
