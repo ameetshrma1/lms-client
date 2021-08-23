@@ -126,12 +126,10 @@ const MainComponent = (props: any) => {
             </Menu.Item>
 
             <Menu.Item key="2">
-              {cookie ? (
+              {cookie && (
                 <Popover content={user.email} title={user.fullName}>
                   <Button type="primary">Admin</Button>
                 </Popover>
-              ) : (
-                <LoginOutlined />
               )}
             </Menu.Item>
           </Menu>
