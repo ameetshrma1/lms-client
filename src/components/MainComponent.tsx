@@ -29,7 +29,7 @@ const { Header, Content, Footer, Sider } = Layout;
 const MainComponent = (props: any) => {
   const [user, setUser] = useState({} as IUser);
   const history = useHistory();
-  const [collapsed, setCollapsed] = useState(false as boolean);
+  const [collapsed, setCollapsed] = useState(true as boolean);
   const cookie = Cookies.get("access_token");
   const [showModal, setShowModal] = useState(false as boolean);
   const [values, setValues] = useState({} as ILogin);
