@@ -5,6 +5,8 @@ import { useHistory } from "react-router";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { LoginOutlined } from "@ant-design/icons";
+import { BookOutlined } from "@ant-design/icons";
+import lms from "../images/unnamed.png";
 
 interface IUser {
   _id: string;
@@ -39,7 +41,7 @@ const MainComponent = (props: any) => {
   };
 
   const getUser = async () => {
-    const response = await axios.get("http://localhost:4099/api/user");
+    const response = await axios.get("http://localhost:5000/api/user");
     setUser(response.data.data);
     console.log(response);
   };
@@ -56,7 +58,7 @@ const MainComponent = (props: any) => {
 
   const handleSubmit = async () => {
     const response = await axios.post(
-      "http://localhost:4099/api/user/login",
+      "http://localhost:5000/api/user/login",
       values
     );
     console.log(response);
@@ -98,7 +100,9 @@ const MainComponent = (props: any) => {
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
-        <div onClick={() => history.push("/")} className="logo" />
+        <div onClick={() => history.push("/")} className="logo">
+          <img className="image" src={lms} alt="" />
+        </div>
         <Sidebar />
       </Sider>
       <Layout className="site-layout">

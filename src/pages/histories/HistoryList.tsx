@@ -6,6 +6,7 @@ import ButtonComponent from "../../components/ButtonComponent";
 import CustomBereadcrumb from "../../components/CustomBereadcrumb";
 import MainComponent from "../../components/MainComponent";
 import TitleComponent from "../../components/TitleComponent";
+import Cookies from "js-cookie";
 
 interface ICategory {
   _id: string;
@@ -43,8 +44,13 @@ const HistoryList = () => {
   const [newBook, setNewBook] = useState("" as string);
   const [newMember, setNewMember] = useState("" as string);
 
+  axios.defaults.headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${Cookies.get("access_token")}`,
+  };
+
   const getAllHistories = async () => {
-    const response = await axios.get("http://localhost:4099/api/history");
+    const response = await axios.get("http://localhost:5000/api/history");
     setHistories(response.data.data);
   };
 
@@ -58,7 +64,7 @@ const HistoryList = () => {
 
   const handleFormSubmit = async () => {
     const response = await axios.post(
-      "http://localhost:4099/api/history",
+      "http://localhost:5000/api/history",
       newHistory
     );
     setShowModal(false);
@@ -67,7 +73,7 @@ const HistoryList = () => {
 
   const handleHistoryEdit = async (id: string) => {
     console.log("Handle hisstory Edit");
-    const response = await axios.get(`http://localhost:4099/api/history/${id}`);
+    const response = await axios.get(`http://localhost:5000/api/history/${id}`);
     setNewHistory(response.data.data);
     setShowModal(true);
   };
@@ -125,12 +131,12 @@ const HistoryList = () => {
   ];
 
   const getAllBooks = async () => {
-    const response = await axios.get("http://localhost:4099/api/books");
+    const response = await axios.get("http://localhost:5000/api/books");
     setBooks(response.data.data);
   };
 
   const getAllMembers = async () => {
-    const response = await axios.get("http://localhost:4099/api/member");
+    const response = await axios.get("http://localhost:5000/api/member");
     setMembers(response.data.data);
   };
 
@@ -155,7 +161,7 @@ const HistoryList = () => {
     getAllHistories();
     getAllMembers();
     getAllBooks();
-  }, []);
+  }, [getAllHistories, getAllMembers, getAllBooks]);
 
   return (
     <MainComponent>

@@ -33,12 +33,12 @@ const ListBooks = () => {
   };
 
   const getAllBooks = async () => {
-    const response = await axios.get("http://localhost:4099/api/books");
+    const response = await axios.get("http://localhost:5000/api/books");
     setBooks(response.data.data);
   };
 
   const getAllCategories = async () => {
-    const response = await axios.get("http://localhost:4099/api/genre");
+    const response = await axios.get("http://localhost:5000/api/genre");
     setCategories(response.data.data);
   };
 
@@ -54,10 +54,10 @@ const ListBooks = () => {
     let tempBook = { ...newBook, category: newCat };
     const response = newBook._id
       ? await axios.patch(
-          `http://localhost:4099/api/books/${newBook._id}`,
+          `http://localhost:5000/api/books/${newBook._id}`,
           tempBook
         )
-      : await axios.post("http://localhost:4099/api/books", tempBook);
+      : await axios.post("http://localhost:5000/api/books", tempBook);
 
     setShowModal(false);
     getAllBooks();
@@ -68,7 +68,7 @@ const ListBooks = () => {
     if (id.length < 1) {
       return;
     }
-    const response = await axios.get(`http://localhost:4099/api/books/${id}`);
+    const response = await axios.get(`http://localhost:5000/api/books/${id}`);
     setNewBook(response.data.data);
     setNewCat(response.data.data.category);
     setShowModal(true);
@@ -84,7 +84,7 @@ const ListBooks = () => {
   };
   const handleBookDelete = async (id: string) => {
     const response = await axios.delete(
-      `http://localhost:4099/api/books/${id}`
+      `http://localhost:5000/api/books/${id}`
     );
     getAllBooks();
   };
@@ -141,7 +141,7 @@ const ListBooks = () => {
   useEffect(() => {
     getAllBooks();
     getAllCategories();
-  }, [getAllBooks, getAllCategories]);
+  }, []);
 
   return (
     <MainComponent>
@@ -181,7 +181,7 @@ const ListBooks = () => {
             onChange={handleCategoryChange}
           >
             {categories.map((category, index) => (
-              <Option key={index} value={category._id}>
+              <Option name={newBook.category} key={index} value={category._id}>
                 {category.genre}
               </Option>
             ))}

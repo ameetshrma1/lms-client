@@ -1,7 +1,12 @@
 .ant-layout-sider-children .logo {
-  height: 32px;
-  margin: 16px;
-  background: rgba(255, 255, 255, 0.3);
+  height: 50px;
+  background: rgba(0, 21, 41, 0.959);
+  text-align: center;
+}
+
+.image {
+  height: 50px;
+  width: 100px;
 }
 
 .site-layout .site-layout-background {

@@ -26,17 +26,17 @@ const Members = () => {
   };
 
   const getAllMembers = async () => {
-    const response = await axios.get("http://localhost:4099/api/member");
+    const response = await axios.get("http://localhost:5000/api/member");
     setMembers(response.data.data);
   };
 
   const handleFormSubmit = async () => {
     const response = newMember._id
       ? await axios.patch(
-          `http://localhost:4099/api/member/${newMember._id}`,
+          `http://localhost:5000/api/member/${newMember._id}`,
           newMember
         )
-      : await axios.post("http://localhost:4099/api/member", newMember);
+      : await axios.post("http://localhost:5000/api/member", newMember);
 
     setShowModal(false);
     getAllMembers();
@@ -52,7 +52,7 @@ const Members = () => {
   };
 
   const handleMemberEdit = async (id: string) => {
-    const response = await axios.get(`http://localhost:4099/api/member/${id}`);
+    const response = await axios.get(`http://localhost:5000/api/member/${id}`);
     setnewMember(response.data.data);
     setShowModal(true);
   };
@@ -94,13 +94,13 @@ const Members = () => {
   ];
 
   const fetchAllMembers = async () => {
-    const response = await axios.get("http://localhost:4099/api/member/");
+    const response = await axios.get("http://localhost:5000/api/member/");
     setMembers(response.data.data);
   };
 
   useEffect(() => {
     fetchAllMembers();
-  }, []);
+  }, [fetchAllMembers]);
 
   const handleClickAddButton = (event: any) => {
     event.persist();
@@ -124,7 +124,7 @@ const Members = () => {
 
   const handleMemberDelete = async (id: string) => {
     const resposne = await axios.delete(
-      `http://localhost:4099/api/member/${id}`
+      `http://localhost:5000/api/member/${id}`
     );
     fetchAllMembers();
   };
