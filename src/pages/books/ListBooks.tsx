@@ -1,5 +1,5 @@
 import { Table, Button, Modal, Input, Select } from "antd";
-
+import Cookies from "js-cookie";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import CustomBereadcrumb from "../../components/CustomBereadcrumb";
@@ -27,6 +27,11 @@ const ListBooks = () => {
   const [categories, setCategories] = useState([] as ICategory[]);
   const [newCat, setNewCat] = useState("" as string);
 
+  axios.defaults.headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${Cookies.get("access_token")}`,
+  };
+
   const getAllBooks = async () => {
     const response = await axios.get("http://localhost:4099/api/books");
     setBooks(response.data.data);
@@ -34,7 +39,6 @@ const ListBooks = () => {
 
   const getAllCategories = async () => {
     const response = await axios.get("http://localhost:4099/api/genre");
-    console.log("==========", response.data.data);
     setCategories(response.data.data);
   };
 
@@ -137,7 +141,7 @@ const ListBooks = () => {
   useEffect(() => {
     getAllBooks();
     getAllCategories();
-  }, []);
+  }, [getAllBooks, getAllCategories]);
 
   return (
     <MainComponent>

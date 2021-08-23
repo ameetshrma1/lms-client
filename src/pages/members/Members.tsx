@@ -95,7 +95,6 @@ const Members = () => {
 
   const fetchAllMembers = async () => {
     const response = await axios.get("http://localhost:4099/api/member/");
-    console.log(response);
     setMembers(response.data.data);
   };
 
@@ -171,8 +170,12 @@ const Members = () => {
           onChange={handleMembershipChange}
           value={newMember.membership}
         >
-          <Option value="Lifetime Member">Lifetime Member</Option>
-          <Option value="Temporary Member">Temporary Member</Option>
+          <Option name={newMember.membership} value="Lifetime Member">
+            Lifetime Member
+          </Option>
+          <Option name={newMember.membership} value="Temporary Member">
+            Temporary Member
+          </Option>
         </Select>
       </Modal>
     </>
